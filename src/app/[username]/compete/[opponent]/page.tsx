@@ -33,7 +33,11 @@ export default async function CompetePage({ params }: PageProps) {
       fetchUserStats(opponent, session?.accessToken)
     ]);
   } catch (error: any) {
-    console.error(error);
+    const isNotFound = error?.message?.toLowerCase().includes('could not resolve to a user') || error?.message?.toLowerCase().includes('not found');
+    if (!isNotFound) {
+      console.error(error);
+    }
+    
     if (error?.message?.toLowerCase().includes('rate limit')) {
       throw error;
     }
