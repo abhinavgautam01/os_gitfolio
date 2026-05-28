@@ -8,6 +8,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       clientSecret: process.env.AUTH_GITHUB_SECRET,
     }),
   ],
+  pages: {
+    signIn: '/signin',
+  },
   callbacks: {
     async jwt({ token, account }) {
       // Persist the GitHub access token in the JWT
