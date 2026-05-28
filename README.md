@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OS_Gitfolio
+
+A professional GitHub profile visualization and analytics platform. This application allows developers to generate comprehensive, visually appealing dashboards of their GitHub activity, providing deep insights into their contribution history, top languages, and repository statistics. It also features a comparison tool to evaluate metrics alongside other developers.
+
+## Features
+
+- Profile Analytics: Detailed metrics including total contributions, pull requests, merged PRs, issues, and stars.
+- Contribution Heatmap: A visual representation of daily contributions over the year, akin to GitHub's native heatmap but highly stylized.
+- Activity Charts: Line graphs displaying activity trends over time (daily and monthly views).
+- Streak Tracking: Calculation of current and longest contribution streaks.
+- Repository Insights: Cards highlighting top repositories with relevant statistics.
+- Language Distribution: A donut chart breaking down the usage of programming languages across public repositories.
+- Competitor Analysis: A side-by-side comparison mode to evaluate metrics against another GitHub user.
+- Export Capabilities: Generate high-resolution PNG or PDF reports of the dashboard.
+- Responsive Design: A modern, glassmorphism-inspired UI tailored for all device sizes.
+
+## Technology Stack
+
+- Framework: Next.js (App Router)
+- Language: TypeScript
+- Styling: Tailwind CSS
+- Data Fetching: GitHub GraphQL API & REST API
+- Authentication: NextAuth.js
+- Visualization: D3.js & Recharts
+- Exporting: html-to-image & jsPDF
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (v18 or higher)
+- npm or yarn
+- A GitHub Personal Access Token
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd github-developer-program
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-## Learn More
+3. Configure Environment Variables:
+   Create a `.env.local` file in the root directory based on `.env.example`:
+   ```bash
+   cp .env.example .env.local
+   ```
+   Ensure you provide the required GitHub OAuth and Personal Access Token credentials.
 
-To learn more about Next.js, take a look at the following resources:
+4. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Access the application at `http://localhost:3000`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Navigate to the homepage to search for any GitHub username.
+- View detailed analytics on the generated dashboard.
+- Use the "Compete" feature to compare stats with another developer.
+- Export the profile as a PNG or PDF using the export bar at the bottom of the dashboard.
