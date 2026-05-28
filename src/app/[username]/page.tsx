@@ -68,7 +68,7 @@ export default async function ProfilePage(
             
             <ActivityCharts data={contributions} />
             
-            <div className="flex justify-center pt-2">
+            <div className="flex justify-center pt-2" data-export-exclude="true">
               <Link 
                 href={`/${username}/activities`}
                 prefetch={false}

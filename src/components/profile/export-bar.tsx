@@ -19,12 +19,8 @@ export function ExportBar({ username }: { username: string }) {
     style.textContent = `
       /* Hide elements marked to be excluded from export */
       [data-export-exclude="true"] { display: none !important; }
-      /* Expand the repo scroll container so all items show */
-      .repo-scroll-container { overflow: visible !important; max-height: none !important; }
       /* Hide the 3rd repo card - only show 2 in export */
       .repo-scroll-container .repo-card:nth-child(n+3) { display: none !important; }
-      /* Expand any other overflow containers */
-      [data-export-expand] { overflow: visible !important; max-height: none !important; }
     `;
     document.head.appendChild(style);
 
@@ -36,6 +32,34 @@ export function ExportBar({ username }: { username: string }) {
     element.style.maxWidth = '1440px';
     element.style.position = 'relative';
 
+    // Fix: Un-scroll everything and forcefully strip overflow/max-height from the scroll container
+    // This avoids html-to-image clipping bugs that hide the "Top Repositories" heading above it.
+    const scrollStates: { node: Element; top: number; left: number }[] = [];
+    const modifiedNodes: { node: HTMLElement; overflowY: string; maxHeight: string; classNames: string }[] = [];
+
+    const scrollables = element.querySelectorAll('*');
+    scrollables.forEach(node => {
+      // Reset scroll position
+      if (node.scrollTop > 0 || node.scrollLeft > 0) {
+        scrollStates.push({ node, top: node.scrollTop, left: node.scrollLeft });
+        node.scrollTop = 0;
+        node.scrollLeft = 0;
+      }
+      
+      // Forcefully strip scroll container styles via JS so html-to-image doesn't trip up
+      if (node instanceof HTMLElement && node.classList.contains('repo-scroll-container')) {
+        modifiedNodes.push({
+          node,
+          overflowY: node.style.overflowY,
+          maxHeight: node.style.maxHeight,
+          classNames: node.className
+        });
+        node.style.maxHeight = 'none';
+        node.style.overflowY = 'visible';
+        node.classList.remove('overflow-y-auto', 'custom-scrollbar');
+      }
+    });
+
     // Wait for browser to re-layout with the CSS overrides applied
     await new Promise(resolve => setTimeout(resolve, 400));
 
@@ -43,10 +67,14 @@ export function ExportBar({ username }: { username: string }) {
       const captureWidth = element.scrollWidth;
       const captureHeight = element.scrollHeight;
 
+      // Determine correct background color based on theme
+      const isDarkMode = document.documentElement.classList.contains('dark');
+      const exportBgColor = isDarkMode ? '#0a0a0f' : '#ffffff';
+
       const dataUrl = await toPng(element, {
         quality: 1.0,
         pixelRatio: 2,
-        backgroundColor: '#0a0a0f',
+        backgroundColor: exportBgColor,
         width: captureWidth,
         height: captureHeight,
         style: {
@@ -67,6 +95,19 @@ export function ExportBar({ username }: { username: string }) {
       element.style.width = prevWidth;
       element.style.maxWidth = prevMaxWidth;
       element.style.position = prevPosition;
+
+      // Restore scroll positions
+      scrollStates.forEach(({ node, top, left }) => {
+        node.scrollTop = top;
+        node.scrollLeft = left;
+      });
+
+      // Restore modified nodes
+      modifiedNodes.forEach(({ node, overflowY, maxHeight, classNames }) => {
+        node.style.overflowY = overflowY;
+        node.style.maxHeight = maxHeight;
+        node.className = classNames;
+      });
     }
   };
 
@@ -114,9 +155,8 @@ export function ExportBar({ username }: { username: string }) {
     
     if (navigator.share) {
       try {
+        // Only share the URL. Passing `text` causes macOS to concatenate the text and URL when using the native "Copy" button.
         await navigator.share({
-          title: `${username}'s OS_Gitfolio`,
-          text: `Check out ${username}'s developer stats!`,
           url: shareUrl,
         });
         toast.success('Shared successfully!');

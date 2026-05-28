@@ -4,7 +4,6 @@ import { Star, GitFork, Book } from 'lucide-react';
 
 export function RepoCards({ repos }: { repos: RepoStat[] }) {
   if (!repos.length) return null;
-  const displayRepos = repos.slice(0, 3);
 
   return (
     <div className="space-y-4">
@@ -13,7 +12,7 @@ export function RepoCards({ repos }: { repos: RepoStat[] }) {
       </h3>
       <div className="overflow-y-auto custom-scrollbar pr-2 repo-scroll-container" style={{ maxHeight: '280px' }}>
         <div className="grid grid-cols-1 gap-4">
-          {displayRepos.map((repo) => (
+          {repos.map((repo) => (
             <GlassCard key={repo.nameWithOwner} hoverEffect className="repo-card p-4 flex flex-col justify-between min-h-[120px] gap-3">
             <div className="space-y-2">
               <a 
