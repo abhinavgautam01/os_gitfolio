@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Star } from 'lucide-react';
 import { FaGithub } from 'react-icons/fa';
 import { ThemeToggle } from '@/components/ui/theme-toggle';
 import { Button } from '@/components/ui/button';
@@ -23,11 +24,22 @@ export async function Navbar() {
           <div className="hidden md:flex relative group">
             <NavbarSearch />
           </div>
+          
+          <a 
+            href="https://github.com/abhinavgautam01/os_gitfolio" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="hidden sm:flex items-center gap-2 text-sm font-medium transition-colors border border-white/10 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 hover:text-yellow-400 group"
+          >
+            <Star className="w-4 h-4 group-hover:fill-yellow-400 transition-colors" />
+            <span>Star on GitHub</span>
+          </a>
+
           <ThemeToggle />
           {session?.user ? (
             <UserNav user={session.user} />
           ) : (
-            <Link href="/api/auth/signin">
+            <Link href="/signin">
               <Button size="sm" variant="primary">Sign In</Button>
             </Link>
           )}
