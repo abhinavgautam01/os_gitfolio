@@ -20,7 +20,7 @@ export function Footer() {
             Terms
           </Link>
           <a
-            href="https://github.com/abhinavgautam01/os-gitfolio"
+            href="https://github.com/abhinavgautam01/os_gitfolio"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-text-primary transition-colors"
