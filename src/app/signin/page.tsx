@@ -1,6 +1,7 @@
 import { signIn } from '@/lib/auth';
 import { GlassCard } from '@/components/ui/glass-card';
-import { Github, Activity, Star, GitBranch } from 'lucide-react';
+import { Activity, Star, GitBranch } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
 import { Navbar } from '@/components/layout/navbar';
 
 export const metadata = {
@@ -24,7 +25,7 @@ export default function SignInPage() {
             <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-cyan-400" />
             
             <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-cyan-500/20 rounded-2xl flex items-center justify-center mb-6 border border-white/10 shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-              <Github className="w-8 h-8 text-white" />
+              <FaGithub className="w-8 h-8 text-white" />
             </div>
             
             <h1 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 mb-3 tracking-tight">
@@ -62,7 +63,7 @@ export default function SignInPage() {
                 type="submit"
                 className="w-full group relative flex items-center justify-center gap-3 bg-white text-black font-semibold py-3 px-4 rounded-xl hover:bg-gray-100 transition-all shadow-[0_4px_14px_0_rgba(255,255,255,0.2)] hover:shadow-[0_6px_20px_rgba(255,255,255,0.25)] hover:-translate-y-0.5 active:translate-y-0"
               >
-                <Github className="w-5 h-5 transition-transform group-hover:scale-110" />
+                <FaGithub className="w-5 h-5 transition-transform group-hover:scale-110" />
                 <span>Continue with GitHub</span>
               </button>
             </form>
