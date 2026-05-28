@@ -68,7 +68,9 @@ export function ExportBar({ username }: { username: string }) {
       const captureHeight = element.scrollHeight;
 
       // Determine correct background color based on theme
-      const isDarkMode = document.documentElement.classList.contains('dark');
+      // next-themes uses data-theme="dark" on the html element
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const isDarkMode = currentTheme === 'dark' || (!currentTheme && window.matchMedia('(prefers-color-scheme: dark)').matches);
       const exportBgColor = isDarkMode ? '#0a0a0f' : '#ffffff';
 
       const dataUrl = await toPng(element, {
